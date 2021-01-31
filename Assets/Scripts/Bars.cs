@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bars : MonoBehaviour {
 
     [SerializeField] LayerMask layerMaskPrisoner;
-    private bool locked = true;
+    public bool locked = true;
     [HideInInspector] public Prisoner prisoner;
     private AudioSource audioSource;
 

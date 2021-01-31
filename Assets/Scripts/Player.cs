@@ -40,7 +40,10 @@ public class Player : MonoBehaviour {
     private void FixedUpdate() {
         if (!exit && GameController.main.state == GameController.State.Game) {
             rb.MoveRotation(rb.rotation * Quaternion.Euler(Vector3.up * inputRotate * 30f * Time.fixedDeltaTime));
-            rb.MovePosition(transform.position + (((transform.forward * inputMove.y) + (transform.right * inputMove.x)) * Time.fixedDeltaTime * 2)); 
+            rb.MovePosition(transform.position + (((transform.forward * inputMove.y) + (transform.right * inputMove.x)) * Time.fixedDeltaTime * 2));
+
+            if (inputMove.magnitude > 0.1f)
+                transform.GetChild(1).LookAt(transform.position + (transform.forward * inputMove.y) + (transform.right * inputMove.x), Vector3.up);
         }
         else if (exit) {
             rb.MovePosition(Vector3.MoveTowards(transform.position, GameController.main.finish.position, Time.fixedDeltaTime * 2));
@@ -66,7 +69,7 @@ public class Player : MonoBehaviour {
 
     public bool InteractAvailable() {
         Collider[] colliders = Physics.OverlapSphere(transform.position, 2f, layerMaskDoor);
-        return colliders.Length == 1;
+        return colliders.Length == 1 && colliders[0].GetComponent<Bars>().locked;
     }
 
     public void InputScream(InputAction.CallbackContext context) {
@@ -108,13 +111,13 @@ public class Player : MonoBehaviour {
 
     public void InputDeviceChange(PlayerInput playerInput) {
         if (playerInput.currentControlScheme == "Keyboard&Mouse") {
-            GameController.main.uiControlsMode = GameController.uiControlsModes.PC;
+            GameController.uiControlsMode = GameController.uiControlsModes.PC;
         }
         else if (playerInput.devices[0].name == "XInputControllerWindows") {
-            GameController.main.uiControlsMode = GameController.uiControlsModes.Xbox;
+            GameController.uiControlsMode = GameController.uiControlsModes.Xbox;
         }
         else {
-            GameController.main.uiControlsMode = GameController.uiControlsModes.Playstation;
+            GameController.uiControlsMode = GameController.uiControlsModes.Playstation;
         }
     }
 }

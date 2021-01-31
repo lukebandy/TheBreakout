@@ -13,7 +13,7 @@ public class GameController : MonoBehaviour {
 
     private AudioSource audioSource;
 
-    private Prisoner[] prisoners;
+    public Prisoner[] prisoners;
     [HideInInspector]
     public Prisoner prisoner;
     [HideInInspector]
@@ -23,8 +23,8 @@ public class GameController : MonoBehaviour {
     public Transform finish;
 
     public enum uiControlsModes { PC, Xbox, Playstation }
-    [HideInInspector]
-    public uiControlsModes uiControlsMode = uiControlsModes.PC;
+    //[HideInInspector]
+    public static uiControlsModes uiControlsMode = uiControlsModes.PC;
 
     [SerializeField]
     TextMeshProUGUI uiText;
@@ -85,6 +85,7 @@ public class GameController : MonoBehaviour {
         // Set the target to be a random prisoner
         prisoners = FindObjectsOfType<Prisoner>();
         prisoner = prisoners[Random.Range(0, prisoners.Length)];
+        Debug.Log(prisoner.name, prisoner.gameObject);
 
         // Assign random screams to prisoners and player       
         List<AudioClip> screams = audioClipsScreams.OfType<AudioClip>().ToList();
@@ -130,12 +131,13 @@ public class GameController : MonoBehaviour {
                 bool prisonersEscaped = false;
                 foreach (Prisoner prisonerCurrent in prisoners) {
                     if (prisonerCurrent != prisoner) {
-                        if (prisonerCurrent.state == Prisoner.State.Exit || !prisoner.navMeshAgent.isOnNavMesh)
+                        if (prisonerCurrent.state == Prisoner.State.Exit || !prisonerCurrent.navMeshAgent.isOnNavMesh) {
                             prisonersEscaped = true;
+                        }
                         else {
-                            if (prisoner.navMeshAgent.isOnNavMesh) {
+                            if (prisonerCurrent.navMeshAgent.isOnNavMesh) {
                                 NavMeshPath path = new NavMeshPath();
-                                prisoner.navMeshAgent.CalculatePath(finish.GetChild(0).position, path);
+                                prisonerCurrent.navMeshAgent.CalculatePath(finish.GetChild(0).position, path);
                                 if (path.corners.Length > 0 && Vector3.Distance(finish.GetChild(0).position, path.corners[path.corners.Length - 1]) < 0.5f)
                                     prisonersEscaping = true;
                             }
@@ -210,7 +212,7 @@ public class GameController : MonoBehaviour {
 
             // Fade out and change level
             if (!fail) {
-                if (SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCount - 1)
+                if (SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCountInBuildSettings - 1)
                     StartCoroutine("LoadLevel", SceneManager.GetActiveScene().buildIndex + 1);
                 else {
                     StartCoroutine("LoadLevel", 0);

@@ -2751,8 +2751,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Someone has been falsley imprisoned for thievery. Track them down, and
-    return them to your cell where you can escape through the secret tunnel. Unfortunetly,
+  m_text: Someone has been falsely imprisoned for thievery. Track them down and return
+    them to your cell where you can escape through the secret tunnel. Unfortunately,
     the only way of identifying them is with a recording of their scream, so listen
     carefully...
   m_isRightToLeft: 0
@@ -2782,7 +2782,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 53.7
+  m_fontSize: 55.2
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3121,6 +3121,7 @@ GameObject:
   - component: {fileID: 6502095261922325106}
   - component: {fileID: 6502095261922325105}
   - component: {fileID: 6502095261922325102}
+  - component: {fileID: 8180053568923536374}
   m_Layer: 5
   m_Name: Game Controller
   m_TagString: Untagged
@@ -3168,11 +3169,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efa6c6137828e5947a0fd16c42aaa895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prisoners: []
   prisoner: {fileID: 0}
   guards: []
   bars: []
   finish: {fileID: 0}
-  uiControlsMode: 0
   uiText: {fileID: 6502095260520105774}
   uiFader: {fileID: 6502095260769371598}
   uiTitle: {fileID: 6502095261472176964}
@@ -3186,16 +3187,20 @@ MonoBehaviour:
   uiControlsPlaystation: {fileID: 8736806630211608157}
   uiControlsPlaystationUnlock: {fileID: 3253410820617958503}
   textIntros:
-  - Someone has been falsley imprisoned for thievery. Track them down, and return
+  - Someone has been falsely imprisoned for thievery. Track them down and return
+    them to your cell where you can escape through the secret tunnel. Unfortunately,
+    the only way of identifying them is with a recording of their scream, so listen
+    carefully...
+  - Someone has been falsely imprisoned for manslaughter. Track them down, and return
     them to your cell where you can escape through the secret tunnel. Unfortunetly,
     the only way of identifying them is with a recording of their scream, so listen
     carefully...
-  - Someone has been falsley imprisoned for manslaughter. Track them down, and return
-    them to your cell where you can escape through the secret tunnel. Unfortunetly,
-    the only way of identifying them is with a recording of their scream, so listen
-    carefully...
+  - Someone has been falsely imprisoned for fraud. Track them down and return them
+    to your cell where you can escape through the secret tunnel. Unfortunately, the
+    only way of identifying them is with a recording of their scream, so listen carefully...
   textWin:
   - Excellent job. Until next time.
+  - Perfect. Come to me to collect your reward.
   textChase:
   - Well done for finding the prisoner, but you'd better run fast with those guards
     on your tail...
@@ -3207,19 +3212,20 @@ MonoBehaviour:
   - The target has been thrown in isolation for trying to escape. I am not impressed.
   textNoTarget:
   - Why would you escape on your own without the target?
+  - Maybe go and look for the target first rather than escaping by yourself?
   audioClipsScreams:
-  - {fileID: 8300000, guid: 8e44d9404ae8c1b4b876d71143a5a0bf, type: 3}
-  - {fileID: 8300000, guid: 672d4af67dc07b34699976bb717f1f21, type: 3}
-  - {fileID: 8300000, guid: 573f9c9831c9837439b6be3662c83048, type: 3}
-  - {fileID: 8300000, guid: f600b2edcbbe0424795837eb69a9a153, type: 3}
-  - {fileID: 8300000, guid: 609ef3024633c2c498555d2d75e77cc0, type: 3}
-  - {fileID: 8300000, guid: 609ef3024633c2c498555d2d75e77cc0, type: 3}
-  - {fileID: 8300000, guid: 609ef3024633c2c498555d2d75e77cc0, type: 3}
-  - {fileID: 8300000, guid: 609ef3024633c2c498555d2d75e77cc0, type: 3}
-  - {fileID: 8300000, guid: 609ef3024633c2c498555d2d75e77cc0, type: 3}
-  - {fileID: 8300000, guid: 609ef3024633c2c498555d2d75e77cc0, type: 3}
-  - {fileID: 8300000, guid: 609ef3024633c2c498555d2d75e77cc0, type: 3}
-  - {fileID: 8300000, guid: 609ef3024633c2c498555d2d75e77cc0, type: 3}
+  - {fileID: 8300000, guid: 6b82ec3842208b34ebef6bf4e35b3c64, type: 3}
+  - {fileID: 8300000, guid: c7536952a7d73a8469b5d07a2289be3c, type: 3}
+  - {fileID: 8300000, guid: d3128bc74fafb484f9a7b219714d029a, type: 3}
+  - {fileID: 8300000, guid: f61f2a35006c5c04b8540bb7bf21094a, type: 3}
+  - {fileID: 8300000, guid: 0b2da59111c7d2f49a43a8bae8e2a9ce, type: 3}
+  - {fileID: 8300000, guid: cef5a6e8240b60a4486707156da107b4, type: 3}
+  - {fileID: 8300000, guid: 9c9e9a34f0d3f6c49942f18236a2b0d2, type: 3}
+  - {fileID: 8300000, guid: b84435a06d4110247939b387b70ef8a3, type: 3}
+  - {fileID: 8300000, guid: 86808e0b6cd13fd4c996be9f9a855839, type: 3}
+  - {fileID: 8300000, guid: 991b3eef125ce6b4099205f6bab8b7cb, type: 3}
+  - {fileID: 8300000, guid: 1da1ea2b64dfa134fbfc5d9050b69f19, type: 3}
+  - {fileID: 8300000, guid: a96899486de78414db0b41c0338da197, type: 3}
   state: 0
 --- !u!223 &6502095261922325107
 Canvas:
@@ -3302,6 +3308,102 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!82 &8180053568923536374
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6502095261922325104}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 393686e4344aa6443822a20397d1e92b, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.483
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 495.0495
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0

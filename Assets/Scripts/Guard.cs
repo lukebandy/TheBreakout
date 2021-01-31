@@ -34,8 +34,21 @@ public class Guard : MonoBehaviour {
             for (float rot = -70; rot <= 70; rot += 5) {
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position, Quaternion.AngleAxis(rot, transform.up) * transform.forward, out hit, 25f) && (hit.transform.CompareTag("Player") || hit.transform.CompareTag("Prisoner"))) {
+                    bool newTarget = true;
+                    // Don't worry about target if they're being returned
                     foreach (Guard guard in GameController.main.guards) {
-                        guard.Chase(hit.transform);
+                        if (guard.chasefollowTarget == hit.transform && guard.state == State.Return) {
+                            newTarget = false;
+                            break;
+                        }
+                    }
+                    // Chase target, and get other guards to center in
+                    if (newTarget) {
+                        Chase(hit.transform);
+                        foreach (Guard guard in GameController.main.guards) {
+                            if (guard != this && guard.state == State.Patrol)
+                                guard.Inspect(hit.transform.position);
+                        }
                     }
                 }
             }
@@ -102,6 +115,27 @@ public class Guard : MonoBehaviour {
                     navMeshAgent.ResetPath();
                 break;
         }
+
+        if (state != State.Return) {
+            foreach (Prisoner prisoner in GameController.main.prisoners) {
+                if (Vector3.Distance(prisoner.transform.position, transform.position) < 1.05f) {
+                    if (prisoner == GameController.main.prisoner) {
+                        GameController.main.Fail(false);
+                    }
+                    if (prisoner.state == Prisoner.State.Follow) {
+                        // Take prisoner back to cell
+                        prisoner.Return(this);
+                        state = State.Return;
+                        chasefollowTarget = prisoner.transform;
+                        // Tell other guards to return to patrol
+                        foreach (Guard guard in GameController.main.guards) {
+                            if (guard != this)
+                                guard.JoinPath();
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public void OnCollisionEnter(Collision collision) {
@@ -110,19 +144,8 @@ public class Guard : MonoBehaviour {
             GameController.main.Fail(true);
             navMeshAgent.enabled = false;
             enabled = false;
-        }
-        else if (collision.transform == GameController.main.prisoner.transform) {
-            GameController.main.Fail(false);
-        }
 
-        // Caught other prisoner
-        if (state != State.Return && collision.gameObject.CompareTag("Prisoner")) {
-            // Take prisoner back to cell
-            collision.gameObject.GetComponent<Prisoner>().Return(this);
-            state = State.Return;
-            chasefollowTarget = collision.transform;
-            // Tell other guards to return to patrol
-            foreach (Guard guard in GameController.main.guards) {
+            foreach(Guard guard in GameController.main.guards) {
                 if (guard != this)
                     guard.JoinPath();
             }
