@@ -1,2 +1,2 @@
-# TheBreakout
-GGJ 2021
+# The Breakout
+Global Game Jam 2021
